@@ -1,0 +1,10 @@
+{
+  "configurations": [
+    {
+      "program": "node",
+      "name": "Web project",
+      "type": "node",
+      "inspect-brk": true
+    }
+  ]
+}
