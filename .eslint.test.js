@@ -26,7 +26,7 @@ const writeFileDataTest = (filename = ".test.write", testContent = "test") => {
 
 const createFormatTest = (
   filename = ".test.createFormat",
-  goal = "let a = { console };\n",
+  goal = "let a = { console }\n",
   target = "let a = {console}"
 ) => {
   writeFileDataTest(filename, target);
@@ -40,7 +40,7 @@ const createFormatTest = (
 
 const formatTest = (
   filename = ".test.format",
-  goal = "let a = { console };\n",
+  goal = "let a = { console }\n",
   target = "let a = {console}"
 ) => {
   writeFileDataTest(filename, target);
@@ -54,7 +54,7 @@ const formatTest = (
   });
 };
 
-getFileDataTest();
-writeFileDataTest();
-createFormatTest();
-formatTest();
+getFileDataTest(".test");
+writeFileDataTest(".test.write");
+createFormatTest(".test.createformat");
+formatTest(".test.format");

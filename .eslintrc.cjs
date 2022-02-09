@@ -1,9 +1,9 @@
-const eslintConfig = {
+module.exports = {
   env: {
     browser: true,
     es2021: true,
   },
-  extends: ["google"],
+  extends: ["airbnb-base"],
   parser: "@typescript-eslint/parser",
   parserOptions: {
     ecmaVersion: "latest",
@@ -12,5 +12,3 @@ const eslintConfig = {
   plugins: ["@typescript-eslint"],
   rules: {},
 };
-
-export default eslintConfig;
