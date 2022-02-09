@@ -1,45 +1,60 @@
-import format, { getFileData, writeFileData } from "./.prettier";
+import format, { getFileData, writeFileData, createFormat } from "./.prettier";
 import { exec } from "child_process";
-
-beforeAll(() => {
-  exec("echo test >.test");
-  exec("echo 'let a = {console}' >.test.format");
-});
 
 afterAll(() => {
   exec("rm .test .test.*");
 });
 
-const getFileDataTest = (filename) => {
+const getFileDataTest = async (filename = ".test", testContent = "test") => {
+  exec(`echo ${testContent} > ${filename}`);
   describe(`test for getFileData function`, () => {
-    test(`reads existing data from ${filename}`, async () => {
+    it(`reads existing data from ${filename}`, async () => {
       const [data, _] = await getFileData(filename);
-      expect(data).toBe("test\n");
+      expect(data).toBe(`${testContent}\n`);
     });
   });
 };
 
-test("writes new file", async () => {
-  const location = ".test.write";
-  await writeFileData("TEST DATA", location);
-  const [data, _] = await getFileData(location);
-  expect(data).toBe("TEST DATA");
-});
+const writeFileDataTest = (filename = ".test.write", testContent = "test") => {
+  getFileDataTest(filename, testContent);
+  describe(`test for writeFileData function`, () => {
+    test(`writes new file @${filename}`, async () => {
+      await writeFileData(testContent, filename);
+    });
+  });
+};
 
-test("fomats file", async () => {
-  const location = ".test.format";
-  const [data, _] = await getFileData(location);
-  expect(data).toBe("let a = {console}");
-  const formatted = await format(data);
-  expect(formatted).toBe("let a = { console };\n");
-});
+const createFormatTest = (
+  filename = ".test.createFormat",
+  goal = "let a = { console };\n",
+  target = "let a = {console}"
+) => {
+  writeFileDataTest(filename, target);
+  describe(`test for formatCreate function`, () => {
+    test("creates format", async () => {
+      const formatted = await createFormat(target);
+      expect(formatted).toBe(goal);
+    });
+  });
+};
 
-test("writes formated files", async () => {
-  const location = ".test.format";
-  let [data, _] = await getFileData(location);
-  expect(data).toBe("let a = {console}");
-  const formatted = await format(data);
-  await writeFileData(formatted, location);
-  [data, _] = await getFileData(location);
-  expect(data).toBe("let a = { console };\n");
-});
+const formatTest = (
+  filename = ".test.format",
+  goal = "let a = { console };\n",
+  target = "let a = {console}"
+) => {
+  writeFileDataTest(filename, target);
+  describe(`test for format function`, () => {
+    test("formats file", async () => {
+      const [data, _] = await getFileData(filename);
+      const afterFormatted = await format(filename, data);
+      await getFileData(filename);
+      expect(afterFormatted).toBe(goal);
+    });
+  });
+};
+
+getFileDataTest();
+writeFileDataTest();
+createFormatTest();
+formatTest();

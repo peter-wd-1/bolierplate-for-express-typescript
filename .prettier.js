@@ -13,7 +13,7 @@ export function getCurrentFileName() {
 
 export async function getFileData(filename) {
   try {
-    const data = await readFile(filename, { encoding: "utf-8" });
+    const data = await readFile(filename, { encoding: "utf8" });
     return [data, null];
   } catch (error) {
     return [null, error];
@@ -26,19 +26,20 @@ export async function writeFileData(data, location = null) {
     targetFile = getCurrentFileName();
   }
   try {
-    const done = await writeFile(location ? location : targetFile, data);
-    return [done, null];
+    await writeFile(location ? location : targetFile, data);
   } catch (error) {
-    return [null, error];
+    console.error(error);
+    return error;
   }
+  return true;
 }
 
-export default async function format(data = null) {
+export async function createFormat(targetCode = null) {
   let sourceCode;
   let error = false;
 
-  if (data) {
-    sourceCode = data;
+  if (targetCode) {
+    sourceCode = targetCode;
   } else {
     const targetFile = getCurrentFileName();
     [sourceCode, error] = await getFileData(targetFile);
@@ -59,10 +60,9 @@ export default async function format(data = null) {
   }
 }
 
-export async function writeFormated(formated, location) {
-  const [done, error] = await writeFileData(formated, location);
-  if (error) {
-    throw new Error(error);
-  }
-  return done;
+export default async function format(location = null, targetCode = null) {
+  const formatedCode = await createFormat(targetCode);
+  return (await writeFileData(formatedCode, location)) ? formatedCode : false;
 }
+
+format();
