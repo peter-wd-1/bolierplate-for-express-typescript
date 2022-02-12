@@ -1,26 +1,26 @@
 
 # Table of Contents
 
-1.  [Emacs IDE for express, typescript project.](#org11e931f)
-    1.  [Edit > ESlint > Prettier Automation](#org3ceed32)
-        1.  [Eslint Prettier Middleware](#orga30823b)
-    2.  [Emacs Node Debugger](#org7b1a382)
-    3.  [Project dependencies](#org991d616)
-    4.  [Eslint](#org80cdacc)
+1.  [Emacs IDE for express, typescript project.](#org08c9b40)
+    1.  [Edit > ESlint > Prettier Automation](#org533911f)
+        1.  [Eslint Prettier Middleware](#org5a28086)
+    2.  [Emacs Node Debugger](#orgb31ce78)
+    3.  [Project dependencies](#org30cf97c)
+    4.  [Eslint](#org6b6f66b)
 
 
 
-<a id="org11e931f"></a>
+<a id="org08c9b40"></a>
 
 # Emacs IDE for express, typescript project.
 
 
-<a id="org3ceed32"></a>
+<a id="org533911f"></a>
 
 ## Edit > ESlint > Prettier Automation
 
 
-<a id="orga30823b"></a>
+<a id="org5a28086"></a>
 
 ### Eslint Prettier Middleware
 
@@ -32,8 +32,8 @@ I have wrote a small middleware to use `prettier-eslint` for Emacs editor. This 
         
             (defun run-eslint-prettier()
               (interactive)
-              (defvar running-command (concat "node " (projectile-project-root) ".prettier.js " (buffer-file-name)))
-              (defvar running-command-parameter (concat (projectile-project-root) ".prettier.js"))
+              (defvar running-command (concat "node " (projectile-project-root) ".prettier.mjs " (buffer-file-name)))
+              (defvar running-command-parameter (concat (projectile-project-root) ".prettier.mjs"))
               (defvar running-process nil)
               (defvar running-process-buffer-name "*run eslint-prettier*")
               (progn (call-process
@@ -44,7 +44,7 @@ I have wrote a small middleware to use `prettier-eslint` for Emacs editor. This 
 1.  How to use
 
 
-<a id="org7b1a382"></a>
+<a id="orgb31ce78"></a>
 
 ## Emacs Node Debugger
 
@@ -63,7 +63,7 @@ I have wrote a small middleware to use `prettier-eslint` for Emacs editor. This 
     }
 
 
-<a id="org991d616"></a>
+<a id="org30cf97c"></a>
 
 ## Project dependencies
 
@@ -72,12 +72,11 @@ I have wrote a small middleware to use `prettier-eslint` for Emacs editor. This 
 -   typescript
 
 
-<a id="org80cdacc"></a>
+<a id="org6b6f66b"></a>
 
 ## Eslint
 
 -   eslint
     `eslint --init`
--   prettier
 -   prettier-eslint
 

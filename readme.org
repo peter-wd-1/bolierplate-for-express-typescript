@@ -10,8 +10,8 @@ I have wrote a small middleware to use =prettier-eslint= for Emacs editor. This 
    #+begin_src lisp
   (defun run-eslint-prettier()
     (interactive)
-    (defvar running-command (concat "node " (projectile-project-root) ".prettier.js " (buffer-file-name)))
-    (defvar running-command-parameter (concat (projectile-project-root) ".prettier.js"))
+    (defvar running-command (concat "node " (projectile-project-root) ".prettier.mjs " (buffer-file-name)))
+    (defvar running-command-parameter (concat (projectile-project-root) ".prettier.mjs"))
     (defvar running-process nil)
     (defvar running-process-buffer-name "*run eslint-prettier*")
     (progn (call-process
@@ -44,5 +44,4 @@ I have wrote a small middleware to use =prettier-eslint= for Emacs editor. This 
 ** Eslint
 - eslint
   =eslint --init=
-- prettier
 - prettier-eslint
